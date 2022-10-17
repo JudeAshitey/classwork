@@ -35,11 +35,22 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 require('dotenv').config()
 
+const session = require('express-session')
 const app = express()
 const PORT = 3000
+const MongoStore = require('connect-mongo')
+
 
 app.use(morgan('dev'))
 app.use(express.json());
+app.use(session(
+  {
+    
+    secret : process.env.SECRET,
+    store : MongoStore.create({mongoUrl: process.env.MONGO_URI}),
+    resave: false,
+    saveUninitialized : true
+  }))
 
 // App settings
 app.set("view engine", "jsx");

@@ -95,6 +95,23 @@ const express = require("express");
 const UserModel = require("../models/UserSchema");
 
 const router = express.Router();
+// Render the Signin Form
+router.get('/signin', (req, res) => {
+  res.render('Users/Signin')
+})
+
+
+// Add Privacy to this router or routes
+router.use((req,res,next) =>{
+   if(req.session.loggedIn){
+    next()
+   } else{
+    res.redirect('/user/signin')
+   }
+})
+
+
+
 
 router.get("/", async (req, res) => {
   try {
@@ -105,6 +122,43 @@ router.get("/", async (req, res) => {
     res.status(403).send("Cannot GET");
   }
 });
+
+
+// Signin an User
+router.post('/signin', async (req, res) => {
+  try {
+    // find user by email in db
+    const user = await UserModel.findOne({email: req.body.email})
+    if (!user) return res.send('Please check your email and password!')
+    // checks if passwords match
+    const decodedPassword = await bcrypt.compare(req.body.password, user.password)
+    if (!decodedPassword) return res.send('Please check your email and password!')
+    // redirect to /blogs
+    res.redirect('/blog')
+
+    // set the user session
+    //create a new username in the session obj using the user info from db
+    req.session.username = user.username;
+    req.session.loggedIn = true;
+  } catch (error) {
+    
+  }
+})
+
+
+//Signout User and destroy session
+
+router.get('/signout', (req, res) => {
+  try {
+    req.session.destroy()
+    res.redirect('/')
+  } catch (error) {
+    console.log(error);
+  }
+})
+
+
+
 
 router.post("/", async (req, res) => {
   try {
@@ -161,3 +215,4 @@ router.delete('/:id', async (req, res) => {
 })
 
 module.exports = router;
+
