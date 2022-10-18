@@ -1,11 +1,12 @@
 const React = require('react')
-
+const NavBar = require('../components/Navbar')
 class Blogs extends React.Component{
    render(){
     const {blogs} =this.props
 
     return(
         <div>
+            <NavBar />
             <h1>Blogs</h1>
             <section>{blogs.map((blog) =>(
                 <div key={blog._id}>
