@@ -25,4 +25,4 @@ class Blogs extends React.Component{
 }
 
 
-module.exports = Blogs
+module.exports = Blogs;
