@@ -21,7 +21,10 @@ const styles = {
     container: {
         display : 'flex',
         justifyContent: 'space-between',
-        background : 'rgba(193, 235, 187, 0.9)'
+        background : '#5C2E7E',
+	    "margin-left":"auto",
+	    "margin-right": "auto",
+        "max-width": "auto"
     }
 }
 

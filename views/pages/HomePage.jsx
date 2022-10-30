@@ -10,7 +10,11 @@ class HomePage extends React.Component {
              <link rel="stylesheet" href="/CSS/app.css" />
              </head>
              <NavBar />
-            <h1>Welcome to my Blog App</h1>
+            <h1>Welcome to My Blog App</h1>
+             
+             <div>
+                <img src = "/CSS/car1.jpg"/>
+             </div>
         </div>)
     }
 }
